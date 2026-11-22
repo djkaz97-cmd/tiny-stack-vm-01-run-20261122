@@ -12,6 +12,8 @@ t(23,0,1,1);t(27,0,1,1);t(32,0,2,1);t(33,0,2,1);t(34,0,2,1);
 t(48,2,0,0);t(49,2,1,0);t(50,2,1,0);t(51,2,0,0);t(52,0,0,0);
 t(64,0,1,1);t(65,0,2,0);t(80,0,1,0);t(81,0,1,0);t(82,0,0,1);t(83,0,1,0);
 // One program to its end: out holds the len bytes it wrote, code is the exit code (a trap's code included).
+// Every trap ends the program at once and keeps the output written before it: the checks below return early, before
+// the instruction's own effect, in ISA.md's order (step limit, pc, opcode, immediate, stack, then the instruction).
 function run(p, inp) {
 const n = p.length, D = new Int32Array(256), C = new Int32Array(64), M = new Int32Array(256), out = Buffer.alloc(MO);
 let sp = 0, cp = 0, len = 0, ip = 0, pc = 0, steps = 0;
